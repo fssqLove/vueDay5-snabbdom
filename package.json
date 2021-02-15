@@ -1,0 +1,16 @@
+{
+  "name": "vueDay5-snabbdom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "01-defProp.js",
+  "dependencies": {
+    "snabbdom": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

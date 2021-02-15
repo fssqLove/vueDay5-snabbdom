@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="module">
+
+        import { init } from './node_modules/snabbdom/build/package/init.js'
+        import { h } from './node_modules/snabbdom/build/package/h.js'
+
+        const patch = init([])
+
+        let vnode; // 保存旧的vnode
+
+        const app = document.querySelector("#app")
+        const obj = {};
+
+        function defineReactive(obj, key, val) {
+            Object.defineProperty(obj, key, {
+                get() {
+                    console.log('get' + key);
+                    return val;
+                },
+                set(newVal) {
+                    if (newVal !== val) {
+                        console.log('set' + key + ':' + newVal);
+                        val = newVal;
+                    }
+
+                    update()
+                }
+            })
+        }
+
+
+        function update() {
+            // app.innerText = obj.foo;
+            vnode = patch(vnode, h('div#app', obj.foo))
+        }
+
+        defineReactive(obj, 'foo', '')
+
+        // 初始化
+        vnode = h('app', { on: { click: () => console.log('click') } }, [
+            h('span', { style: { fontWeight: 'bold' } }, 'This is bold'),
+            ' and this is just normal text',
+            h('a', { props: { href: '/foo' } }, 'I\'ll take you places!')
+        ])
+        patch(app, vnode)
+
+
+        setInterval(() => {
+            obj.foo = new Date().toLocaleTimeString()
+        }, 1000)
+    </script>
+</body>
+
+</html>
